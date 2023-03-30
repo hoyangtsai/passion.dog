@@ -1,0 +1,27 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    font-family: "Arial";
+}
+body {
+    background: rgb(36, 38, 45); 
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#logo {
+    flex: 1;
+    object-fit: contain;
+    width: 50%;
+    max-height: 100%;
+}
