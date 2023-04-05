@@ -1,4 +1,4 @@
-export function registers() {
+export function register() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       const swUrl = `/sw.js`;
