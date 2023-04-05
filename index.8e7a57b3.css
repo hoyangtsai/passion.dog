@@ -1,0 +1,2 @@
+:root{--main-bg-color:#24262d}html,body{height:100%;margin:0;font-family:Arial}body{background:var(--main-bg-color)}#root{height:100%;width:100%}#container{height:100%;flex-direction:column;justify-content:center;align-items:center;display:flex}#logo{object-fit:contain;width:50%;max-height:100%;flex:1}
+/*# sourceMappingURL=index.8e7a57b3.css.map */
