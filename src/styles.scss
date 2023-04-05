@@ -1,10 +1,15 @@
+:root {
+    --main-bg-color: rgb(36, 38, 45);
+}
+
 html, body {
     margin: 0;
     height: 100%;
     font-family: "Arial";
 }
+
 body {
-    background: rgb(36, 38, 45); 
+    background: var(--main-bg-color); 
 }
 
 #root {

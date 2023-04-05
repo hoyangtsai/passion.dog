@@ -1,0 +1,24 @@
+{
+  "name": "passion.dog",
+  "version": "1.0.0",
+  "description": "PassionDog official site source code",
+  "scripts": {
+    "dev": "npx parcel src/index.html",
+    "build": "rm -rf dist && npx parcel build src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoyangtsai/passion.dog.git"
+  },
+  "keywords": [],
+  "author": "Hoyang Tsai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hoyangtsai/passion.dog/issues"
+  },
+  "homepage": "https://github.com/hoyangtsai/passion.dog#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.3"
+  }
+}
