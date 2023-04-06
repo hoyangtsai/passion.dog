@@ -1,9 +1,9 @@
 {
   "name": "passion.dog",
   "version": "1.0.0",
-  "description": "PassionDog official site source code",
+  "description": "PassionDog webpage source code",
   "scripts": {
-    "dev": "npx parcel src/index.html",
+    "dev": "npx parcel src/index.html src/offline.html",
     "build": "rm -rf dist && npx parcel build src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,7 +1,7 @@
 {
   "name": "PassionDog",
-  "short_name": "psd",
-  "description": "The PassionDog homepage",
+  "short_name": "PassionDog",
+  "description": "The PassionDog home website",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#677EFF",

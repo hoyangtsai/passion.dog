@@ -17,12 +17,13 @@ body {
     width: 100%;
 }
 
-#container {
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
+    color: #fff;
 }
 
 #logo {
@@ -30,4 +31,34 @@ body {
     object-fit: contain;
     width: 50%;
     max-height: 100%;
+}
+
+.toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+output {
+    display: block;
+    color: rgb(230, 230, 230);
+    margin: 32px 0;
+    text-align: center;
+    border: 1px silver dashed;
+    padding: 16px;
+    border-radius: 16px;  
+}
+
+#install {
+    display: block;
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 16px;
+    text-transform: uppercase;
+}
+
+/* Hide Install button until beforeinstallprompt fires */
+#install { 
+    display: none;
 }

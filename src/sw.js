@@ -1,58 +1,55 @@
-import { manifest, version } from '@parcel/service-worker';
-
+const VERSION = 1;
 // Define the cache name
-const cacheName = `psd-v${version ? version: 1}`;
+const CACHE_NAME = `psd-v${VERSION}`;
 
-// Define the files to cache
-const filesToCache = [
-  ...manifest,
-  '/',
-  '/index.html'
-];
+const OFFLINE_URL = 'index.html';
 
-// Install the service worker and cache the app shell
-async function install() {
-  try {
-    const cache = await caches.open(cacheName);
-    await cache.addAll(filesToCache);
-  } catch (err) {
-    console.error('install error =>', err);
-  }
-}
-addEventListener('install', e => e.waitUntil(install()));
+self.addEventListener('install', function(event) {
+  console.log('[ServiceWorker] Install');
+  
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    // Setting {cache: 'reload'} in the new request will ensure that the response
+    // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
+    await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
+  })());
+  
+  self.skipWaiting();
+});
 
-async function activate() {
-  const keys = await caches.keys();
-  await Promise.all(
-    keys.map(key => key !== cacheName && caches.delete(key))
-  );
-}
-addEventListener('activate', e => e.waitUntil(activate()));
+self.addEventListener('activate', (event) => {
+  console.log('[ServiceWorker] Activate');
+  event.waitUntil((async () => {
+    // Enable navigation preload if it's supported.
+    // See https://developers.google.com/web/updates/2017/02/navigation-preload
+    if ('navigationPreload' in self.registration) {
+      await self.registration.navigationPreload.enable();
+    }
+  })());
+
+  // Tell the active service worker to take control of the page immediately.
+  self.clients.claim();
+});
 
 // Serve cached content when offline
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response;
+  if (event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        const preloadResponse = await event.preloadResponse;
+        if (preloadResponse) {
+          return preloadResponse;
         }
 
-        return fetch(event.request)
-          .then(response => {
-            if (response.ok) {
-              return caches.open(cacheName)
-                .then(cache => {
-                  cache.put(event.request, response.clone());
-                  return response;
-                })
-                .catch(error => console.error(error));
-            }
+        const networkResponse = await fetch(event.request);
+        return networkResponse;
+      } catch (error) {
+        console.log('[Service Worker] Fetch failed; returning offline page instead.', error);
 
-            return response;
-          })
-          .catch(error => console.error(error));
-      })
-      .catch(error => console.error(error))
-  );
+        const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(OFFLINE_URL);
+        return cachedResponse;
+      }
+    })());
+  }
 });

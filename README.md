@@ -1,4 +1,4 @@
-# Passion.dog official site
+# Passion.dog home webpage
 
 ## Develop
 
