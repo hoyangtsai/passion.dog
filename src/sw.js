@@ -1,22 +1,33 @@
+import { manifest, version } from '@parcel/service-worker';
+
 // Define the cache name
-const cacheName = 'pd-app-cache';
+const cacheName = `psd-v${version ? version: 1}`;
 
 // Define the files to cache
 const filesToCache = [
+  ...manifest,
   '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js'
+  '/index.html'
 ];
 
 // Install the service worker and cache the app shell
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(cacheName)
-      .then(cache => cache.addAll(filesToCache))
-      .catch(error => console.error(error))
+async function install() {
+  try {
+    const cache = await caches.open(cacheName);
+    await cache.addAll(filesToCache);
+  } catch (err) {
+    console.error('install error =>', err);
+  }
+}
+addEventListener('install', e => e.waitUntil(install()));
+
+async function activate() {
+  const keys = await caches.keys();
+  await Promise.all(
+    keys.map(key => key !== cacheName && caches.delete(key))
   );
-});
+}
+addEventListener('activate', e => e.waitUntil(activate()));
 
 // Serve cached content when offline
 self.addEventListener('fetch', event => {

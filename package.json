@@ -4,8 +4,7 @@
   "description": "PassionDog official site source code",
   "scripts": {
     "dev": "npx parcel src/index.html",
-    "build": "rm -rf dist && npx parcel build src/index.html && workbox generateSW",
-    "pwa:wizard": "npx workbox wizard",
+    "build": "rm -rf dist && npx parcel build src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,8 +21,10 @@
   "devDependencies": {
     "@parcel/packager-raw-url": "^2.8.3",
     "@parcel/transformer-sass": "^2.8.3",
-    "@parcel/transformer-webmanifest": "^2.8.3",
-    "workbox-cli": "^6.5.4"
+    "@parcel/transformer-webmanifest": "^2.8.3"
   },
-  "browserslist": "> 0.25%, not dead"
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "dependencies": {
+    "@parcel/service-worker": "^2.8.3"
+  }
 }
